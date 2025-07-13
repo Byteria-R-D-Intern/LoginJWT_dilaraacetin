@@ -1,0 +1,12 @@
+com\example\loginjwt\model\User.class
+com\example\loginjwt\config\SecurityConfig.class
+com\example\loginjwt\repository\UserRepository.class
+com\example\loginjwt\config\JwtAuthenticationFilter.class
+com\example\loginjwt\service\AuthenticationService.class
+com\example\loginjwt\controller\AuthController.class
+com\example\loginjwt\LoginjwtApplication.class
+com\example\loginjwt\service\JwtService.class
+com\example\loginjwt\dto\AuthenticationResponse.class
+com\example\loginjwt\service\UserService.class
+com\example\loginjwt\service\CustomUserDetailsService.class
+com\example\loginjwt\dto\AuthenticationRequest.class
