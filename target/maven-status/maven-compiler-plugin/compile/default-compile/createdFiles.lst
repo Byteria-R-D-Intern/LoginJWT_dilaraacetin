@@ -7,6 +7,12 @@ com\example\loginjwt\controller\AuthController.class
 com\example\loginjwt\LoginjwtApplication.class
 com\example\loginjwt\service\JwtService.class
 com\example\loginjwt\dto\AuthenticationResponse.class
+com\example\loginjwt\dto\UserDetailsRequest.class
 com\example\loginjwt\service\UserService.class
+com\example\loginjwt\dto\UserDetailsResponse.class
 com\example\loginjwt\service\CustomUserDetailsService.class
+com\example\loginjwt\repository\UserDetailsRepository.class
+com\example\loginjwt\controller\UserController.class
 com\example\loginjwt\dto\AuthenticationRequest.class
+com\example\loginjwt\model\UserDetails.class
+com\example\loginjwt\service\UserDetailsService.class

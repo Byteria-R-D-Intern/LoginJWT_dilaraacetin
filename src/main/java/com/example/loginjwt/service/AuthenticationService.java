@@ -3,7 +3,6 @@ package com.example.loginjwt.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
@@ -26,16 +25,22 @@ public class AuthenticationService {
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         try {
-            Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
             );
 
-            User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+            User user = userRepository.findByEmail(request.getEmail())
+                    .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı: " + request.getEmail()));
+
             String token = jwtService.generateToken(user.getId());
+
             return new AuthenticationResponse(token);
 
         } catch (AuthenticationException e) {
-            throw new RuntimeException("Invalid email or password");
+            throw new RuntimeException("Geçersiz e-posta veya şifre.");
         }
     }
 }

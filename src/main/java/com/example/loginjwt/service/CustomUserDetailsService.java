@@ -17,7 +17,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    // Varsayılan olarak Spring Security hala bu metodu çağırır (email login için)
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
@@ -30,7 +29,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         );
     }
 
-    // Token'dan gelen ID'ye göre kullanıcıyı getirir
     public UserDetails loadUserById(Long id) throws UsernameNotFoundException {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + id));
