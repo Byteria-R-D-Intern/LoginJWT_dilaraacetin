@@ -19,9 +19,11 @@ import com.example.loginjwt.model.UserDetails;
 import com.example.loginjwt.service.JwtService;
 import com.example.loginjwt.service.UserDetailsService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
+@SecurityRequirement(name = "BearerAuth")
 @RestController
 @RequestMapping("/user")
 public class UserController {

@@ -35,7 +35,7 @@ public class AuthenticationService {
             User user = userRepository.findByEmail(request.getEmail())
                     .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı: " + request.getEmail()));
 
-            String token = jwtService.generateToken(user.getId());
+            String token = jwtService.generateToken(user);
 
             return new AuthenticationResponse(token);
 
