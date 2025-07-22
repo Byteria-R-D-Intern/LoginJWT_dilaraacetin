@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -141,6 +142,7 @@ public class UserController {
                     .body("Bir hata oluştu: " + e.getMessage());
         }
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/details")
     public ResponseEntity<?> deleteUserDetails(HttpServletRequest httpRequest) {
         try {
@@ -154,21 +156,21 @@ public class UserController {
             String token = authHeader.substring(7);
             Long userId = jwtService.extractUserId(token);
 
-            Optional<UserDetails> userDetailsOpt = userDetailsService.getDetailsByUserId(userId);
+            boolean deleted = userDetailsService.deleteUserDetails(userId);
 
-            if (userDetailsOpt.isEmpty()) {
+            if (!deleted) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("Kullanıcı detay kaydı bulunamadı.");
             }
 
-            userDetailsService.deleteUserDetails(userId);
-            return ResponseEntity.noContent().build(); 
+            return ResponseEntity.noContent().build();
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Bir hata oluştu: " + e.getMessage());
         }
     }
+
 
 
 }

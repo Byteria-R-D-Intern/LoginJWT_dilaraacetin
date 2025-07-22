@@ -52,10 +52,16 @@ public class UserDetailsService {
 
         return userDetailsRepository.save(details);
     }
-    public void deleteUserDetails(Long userId) {
-        userDetailsRepository.findByUserId(userId)
-                .ifPresent(userDetailsRepository::delete);
+    public boolean deleteUserDetails(Long userId) {
+        Optional<UserDetails> existing = userDetailsRepository.findByUserId(userId);
+        if (existing.isPresent()) {
+            userDetailsRepository.delete(existing.get());
+            return true;
+        } else {
+            return false;
+        }
     }
+
 
 
 
