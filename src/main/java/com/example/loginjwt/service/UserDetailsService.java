@@ -52,6 +52,7 @@ public class UserDetailsService {
 
         return userDetailsRepository.save(details);
     }
+
     public boolean deleteUserDetails(Long userId) {
         Optional<UserDetails> existing = userDetailsRepository.findByUserId(userId);
         if (existing.isPresent()) {
@@ -62,7 +63,12 @@ public class UserDetailsService {
         }
     }
 
-
-
-
+    public boolean deleteUserDetailsByAdmin(Long userId) {
+        Optional<UserDetails> details = userDetailsRepository.findByUserId(userId);
+        if (details.isPresent()) {
+            userDetailsRepository.delete(details.get());
+            return true;
+        }
+        return false;
+    }
 }

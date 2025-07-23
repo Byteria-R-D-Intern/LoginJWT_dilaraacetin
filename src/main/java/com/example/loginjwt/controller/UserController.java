@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -170,7 +171,18 @@ public class UserController {
                     .body("Bir hata oluştu: " + e.getMessage());
         }
     }
+    @PreAuthorize("hasRole('ADMIN')")
+@DeleteMapping("/details/{userId}")
+public ResponseEntity<?> deleteAnyUserDetails(@PathVariable Long userId) {
+    boolean deleted = userDetailsService.deleteUserDetailsByAdmin(userId);
 
+    if (!deleted) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Belirtilen kullanıcıya ait detay kaydı bulunamadı.");
+    }
+
+    return ResponseEntity.noContent().build();
+}
 
 
 }
